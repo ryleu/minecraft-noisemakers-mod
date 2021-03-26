@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
-  "version": "${version}",
+  "id": "fourinchknife-noisemakers",
+  "version": "1.0.0",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Noisemakers",
+  "description": "Adds noisemakers to Minecraft that can be used both in your hand and in dispensers.",
   "authors": [
-    "Me!"
+    "FourInchKnife"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/FourInchKnife/minecraft-noisemakers-mod",
+    "sources": "https://github.com/FourInchKnife/minecraft-noisemakers-mod"
   },
 
   "license": "CC0-1.0",
@@ -19,19 +19,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "io.github.fourinchknife.noisemakers.NoiseMakers"
     ]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
     "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }

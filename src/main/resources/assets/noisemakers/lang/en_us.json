@@ -1,0 +1,17 @@
+{
+  "item.noisemakers.blaze_noisemaker": "Blaze Noisemaker",
+  "item.noisemakers.creeper_noisemaker": "Creeper Noisemaker",
+  "item.noisemakers.enderman_noisemaker": "Enderman Noisemaker",
+  "item.noisemakers.evoker_noisemaker": "Evoker Noisemaker",
+  "item.noisemakers.ghast_noisemaker": "Ghast Noisemaker",
+  "item.noisemakers.guardian_noisemaker": "Guardian Noisemaker",
+  "item.noisemakers.phantom_noisemaker": "Phantom Noisemaker",
+  "item.noisemakers.piglin_noisemaker": "Piglin Noisemaker",
+  "item.noisemakers.pillager_noisemaker": "Pillager Noisemaker",
+  "item.noisemakers.shulker_noisemaker": "Shulker Noisemaker",
+  "item.noisemakers.skeleton_noisemaker": "Skeleton Noisemaker",
+  "item.noisemakers.spider_noisemaker": "Spider Noisemaker",
+  "item.noisemakers.zombie_noisemaker": "Zombie Noisemaker",
+
+  "itemGroup.noisemakers.general": "Noisemakers"
+}

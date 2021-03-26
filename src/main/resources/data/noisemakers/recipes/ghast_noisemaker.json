@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SSS",
+		"IMI"
+	],
+	"key": {
+		"S":
+		{
+			"item": "minecraft:string"
+		},
+		"I": {
+			"item": "minecraft:iron_ingot"
+		},
+		"M": {
+			"item": "minecraft:ghast_tear"
+		}
+	},
+	"result": {
+		"item": "noisemakers:ghast_noisemaker",
+		"count": 1
+	}
+}
+

@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SSS",
+		"IMI"
+	],
+	"key": {
+		"S":
+		{
+			"item": "minecraft:string"
+		},
+		"I": {
+			"item": "minecraft:iron_ingot"
+		},
+		"M": {
+			"item": "minecraft:totem_of_undying"
+		}
+	},
+	"result": {
+		"item": "noisemakers:evoker_noisemaker",
+		"count": 1
+	}
+}
+
