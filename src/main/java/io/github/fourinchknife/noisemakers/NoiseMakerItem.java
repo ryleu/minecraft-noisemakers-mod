@@ -1,5 +1,7 @@
 package io.github.fourinchknife.noisemakers;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.DispenserBlock;
@@ -18,6 +20,8 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 public class NoiseMakerItem extends Item {
     public static final Item NOISEMAKER = new Item(new FabricItemSettings());
     public static final ItemGroup NOISEMAKERS_GROUP = FabricItemGroupBuilder.build(
@@ -25,7 +29,7 @@ public class NoiseMakerItem extends Item {
             () -> new ItemStack(NOISEMAKER)
     );
 
-    public enum Type {
+    private enum Type {
         BLAZE,
         CREEPER,
         ENDERMAN,
@@ -40,70 +44,74 @@ public class NoiseMakerItem extends Item {
         SPIDER,
         ZOMBIE
     }
+    private final Type itemType;
 
-    public SoundEvent playedSound;
-    public String path;
+    private static ArrayList<NoiseMakerItem> allItems = null;
 
-    public NoiseMakerItem(Type type) {
+    private final SoundEvent playedSound;
+    private final String craftingItem;
+
+    private NoiseMakerItem(Type type) {
         super(new FabricItemSettings()
                 .group(NoiseMakerItem.NOISEMAKERS_GROUP)
                 .maxCount(1));
-        switch (type){
+        itemType = type;
+        switch (itemType){
             case BLAZE:
                 playedSound = SoundEvents.ENTITY_BLAZE_AMBIENT;
-                path = "blaze_noisemaker";
+                craftingItem = "minecraft:blaze_rod";
                 break;
             case CREEPER:
                 playedSound = SoundEvents.ENTITY_CREEPER_PRIMED;
-                path = "creeper_noisemaker";
+                craftingItem = "minecraft:gunpowder";
                 break;
             case ENDERMAN:
                 playedSound = SoundEvents.ENTITY_ENDERMAN_AMBIENT;
-                path = "enderman_noisemaker";
+                craftingItem = "minecraft:ender_pearl";
                 break;
             case EVOKER:
                 playedSound = SoundEvents.ENTITY_EVOKER_AMBIENT;
-                path = "evoker_noisemaker";
+                craftingItem = "minecraft:totem_of_undying";
                 break;
             case GHAST:
                 playedSound = SoundEvents.ENTITY_GHAST_AMBIENT;
-                path = "ghast_noisemaker";
+                craftingItem = "minecraft:ghast_tear";
                 break;
             case GUARDIAN:
                 playedSound = SoundEvents.ENTITY_GUARDIAN_AMBIENT_LAND;
-                path = "guardian_noisemaker";
+                craftingItem = "minecraft:prismarine_shard";
                 break;
             case PHANTOM:
                 playedSound = SoundEvents.ENTITY_PHANTOM_AMBIENT;
-                path = "phantom_noisemaker";
+                craftingItem = "minecraft:phantom_membrane";
                 break;
             case PIGLIN:
                 playedSound = SoundEvents.ENTITY_PIGLIN_BRUTE_ANGRY;
-                path = "piglin_noisemaker";
+                craftingItem = "minecraft:gold_ingot";
                 break;
             case PILLAGER:
                 playedSound = SoundEvents.ENTITY_PILLAGER_AMBIENT;
-                path = "pillager_noisemaker";
+                craftingItem = "minecraft:iron_axe";
                 break;
             case SHULKER:
                 playedSound = SoundEvents.ENTITY_SHULKER_AMBIENT;
-                path = "shulker_noisemaker";
+                craftingItem = "minecraft:shulker_shell";
                 break;
             case SKELETON:
                 playedSound = SoundEvents.ENTITY_SKELETON_AMBIENT;
-                path = "skeleton_noisemaker";
+                craftingItem = "minecraft:bone";
                 break;
             case SPIDER:
                 playedSound = SoundEvents.ENTITY_SPIDER_AMBIENT;
-                path = "spider_noisemaker";
+                craftingItem = "minecraft:spider_eye";
                 break;
             case ZOMBIE:
                 playedSound = SoundEvents.ENTITY_ZOMBIE_AMBIENT;
-                path = "zombie_noisemaker";
+                craftingItem = "minecraft:rotten_flesh";
                 break;
             default:
-                playedSound = SoundEvents.UI_BUTTON_CLICK;
-                path = "noisemaker";
+                playedSound = null;
+                craftingItem = null;
                 break;
         }
     }
@@ -118,7 +126,7 @@ public class NoiseMakerItem extends Item {
     public void registerSelf() {
         Registry.register(
                 Registry.ITEM,
-                new Identifier("noisemakers", path),
+                new Identifier("noisemakers", getItemName() + "_noisemaker"),
                 this
         );
 
@@ -131,5 +139,76 @@ public class NoiseMakerItem extends Item {
                 return stack;
             }
         });
+    }
+    public JsonObject getRecipe() {
+        //Creating a new json object, where we will store our recipe.
+        JsonObject json = new JsonObject();
+        //The "type" of the recipe we are creating. In this case, a shaped recipe.
+        json.addProperty("type", "minecraft:crafting_shaped");
+        //This creates:
+        //"type": "minecraft:crafting_shaped"
+
+        //We create a new Json Element, and add our crafting pattern to it.
+        JsonArray jsonArray = new JsonArray();
+        jsonArray.add("SSS");
+        jsonArray.add("IMI");
+        //Then we add the pattern to our json object.
+        json.add("pattern", jsonArray);
+        //This creates:
+        //"pattern": [
+        //  "SSS",
+        //  "IMI"
+        //]
+
+        //Next we need to define what the keys in the pattern are. For this we need different JsonObjects per key definition, and one main JsonObject that will contain all of the defined keys.
+
+        JsonObject keyList = new JsonObject(); //The main key object, containing all the keys
+
+        // minecraft:string
+        JsonObject individualKey = new JsonObject();
+        individualKey.addProperty("item", "minecraft:string");
+        keyList.add("S", individualKey);
+
+        // minecraft:iron_ingot
+        individualKey = new JsonObject();
+        individualKey.addProperty("item", "minecraft:iron_ingot");
+        keyList.add("I", individualKey);
+
+        // other mob-specific item
+        individualKey = new JsonObject();
+        individualKey.addProperty("item", craftingItem);
+        keyList.add("M", individualKey);
+
+
+        // Adds all of those together
+        json.add("key", keyList);
+
+        //Finally, we define our result object
+        JsonObject result = new JsonObject();
+        result.addProperty("item", "noisemakers:" + getItemName() + "_noisemaker");
+        result.addProperty("count", 1);
+        json.add("result", result);
+        //This creates:
+        //"result": {
+        //  "item": "noisemakers:<something>_noisemaker",
+        //  "count": 1
+        //}
+
+        return json;
+    }
+
+    public static ArrayList<NoiseMakerItem> getAllTypes (){
+        if (allItems == null){
+            ArrayList<NoiseMakerItem> tempItems = new ArrayList<>();
+            for (Type type : Type.values()){
+                tempItems.add(new NoiseMakerItem(type));
+            }
+            allItems = tempItems;
+        }
+        return allItems;
+    }
+
+    public String getItemName() {
+        return itemType.toString().toLowerCase();
     }
 }

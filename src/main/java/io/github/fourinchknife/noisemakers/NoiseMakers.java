@@ -7,15 +7,16 @@ import net.minecraft.util.registry.Registry;
 public class NoiseMakers implements ModInitializer {
 	@Override
 	public void onInitialize() {
+		// Register the dummy item for the item group icon
 		Registry.register(
 				Registry.ITEM,
 				new Identifier("noisemakers","noisemaker"),
 				NoiseMakerItem.NOISEMAKER
 			);
 
-		for (NoiseMakerItem.Type type : NoiseMakerItem.Type.values()){
-			NoiseMakerItem noisemaker = new NoiseMakerItem(type);
-			System.out.println("Loading Noisemakers: " + noisemaker.path);
+		// Register everything else
+		for (NoiseMakerItem noisemaker : NoiseMakerItem.getAllTypes()){
+			System.out.println("Registering noisemakers:" + noisemaker.getItemName() + "_noisemaker");
 			noisemaker.registerSelf();
 		}
 	}
