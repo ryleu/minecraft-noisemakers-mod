@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "fourinchknife-noisemakers",
-    "version": "1.0.1",
+    "version": "1.0.2",
 
     "name": "Noisemakers",
     "description": "Adds noisemakers to Minecraft that can be used both in your hand and in dispensers.",
