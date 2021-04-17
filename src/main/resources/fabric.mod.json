@@ -31,6 +31,9 @@
         "fabric": "*",
         "minecraft": "1.16.x"
     },
+    "suggests": {
+        "modupdater": "*"
+    },
     "custom": {
         "modupdater": {
             "strategy": "github",
